@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Ticket Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <header>
+            <h1>🎤 Live Manager</h1>
+            <button v-if="currentPage !== 'list'" @click="currentPage = 'list'" class="btn-back">🔙 戻る</button>
+        </header>
+
+        <main>
+            <div v-if="currentPage === 'list'">
+                <div class="card add-live">
+                    <h3>新規ライブ登録</h3>
+                    <input v-model="newLive.name" placeholder="ライブ名">
+                    <input v-model="newLive.venue" placeholder="会場">
+                    <div class="row">
+                        <input type="time" v-model="newLive.open">
+                        <input type="time" v-model="newLive.start">
+                    </div>
+                    <div class="row">
+                        <input type="number" v-model.number="newLive.price" placeholder="チケット代">
+                        <input type="number" v-model.number="newLive.drink" placeholder="ドリンク代">
+                    </div>
+                    <button @click="addLive" class="btn-primary">登録する ✨</button>
+                </div>
+
+                <div v-for="(live, index) in lives" :key="index" class="card live-item" @click="viewDetail(index)">
+                    <h4>{{ live.name }}</h4>
+                    <p>📍 {{ live.venue }}</p>
+                    <p>🕒 {{ live.start }} START</p>
+                </div>
+            </div>
+
+            <div v-if="currentPage === 'detail'">
+                <h2>{{ currentLive.name }}</h2>
+                
+                <div class="tabs">
+                    <button :class="{active: activeTab === 'ticket'}" @click="activeTab = 'ticket'">チケット</button>
+                    <button :class="{active: activeTab === 'invite'}" @click="activeTab = 'invite'">招待</button>
+                    <button :class="{active: activeTab === 'total'}" @click="activeTab = 'total'">集計</button>
+                </div>
+
+                <div v-if="activeTab === 'ticket'" class="tab-content">
+                    <div class="input-group">
+                        <input v-model="newTicketNo" placeholder="チケット番号 (例: A1)">
+                        <button @click="addTicket">追加</button>
+                    </div>
+                    <ul class="ticket-list">
+                        <li v-for="t in currentLive.tickets" :class="{assigned: t.assigned}">
+                            {{ t.no }} <span>{{ t.assigned ? '割当済' : '未割当' }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div v-if="activeTab === 'invite'" class="tab-content">
+                    <div class="card form">
+                        <input v-model="newGuest.name" placeholder="お名前">
+                        <p class="label">チケット選択（複数可）</p>
+                        <div class="chip-container">
+                            <span v-for="t in unassignedTickets" 
+                                  :class="{selected: newGuest.ticketNos.includes(t.no)}"
+                                  @click="toggleTicketSelection(t.no)" class="chip">
+                                {{ t.no }}
+                            </span>
+                        </div>
+                        <select v-model="newGuest.payType">
+                            <option value="both">代金＋ドリンク</option>
+                            <option value="ticket">チケット代のみ</option>
+                            <option value="drink">ドリンク代のみ</option>
+                        </select>
+                        <input type="number" v-model.number="newGuest.extra" placeholder="追加費用">
+                        <button @click="addGuest" class="btn-primary">招待者を追加 👤</button>
+                    </div>
+
+                    <div v-for="guest in currentLive.guests" class="card guest-item">
+                        <strong>{{ guest.name }}</strong>
+                        <p>🎫 {{ guest.ticketNos.join(', ') }}</p>
+                        <p>💰 合計: ¥{{ calculateGuestTotal(guest).toLocaleString() }}</p>
+                    </div>
+                </div>
+
+                <div v-if="activeTab === 'total'" class="tab-content">
+                    <div class="card summary">
+                        <h3>全体合計</h3>
+                        <table>
+                            <tr><td>総チケット数</td><td>{{ totalStats.count }} 枚</td></tr>
+                            <tr><td>総チケット代</td><td>¥{{ totalStats.ticket.toLocaleString() }}</td></tr>
+                            <tr><td>総ドリンク代</td><td>¥{{ totalStats.drink.toLocaleString() }}</td></tr>
+                            <tr><td>総追加費用</td><td>¥{{ totalStats.extra.toLocaleString() }}</td></tr>
+                            <tr class="grand-total"><td>総合計</td><td>¥{{ totalStats.grand.toLocaleString() }}</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

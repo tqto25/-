@@ -1,0 +1,100 @@
+:root {
+    --primary: #ff85a2;
+    --secondary: #b2f7ef;
+    --bg: #fff5f7;
+    --text: #555;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding-bottom: 50px;
+}
+
+header {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+h1 { font-size: 1.2rem; color: var(--primary); margin: 0; }
+
+.card {
+    background: white;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(255, 133, 162, 0.1);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.row { display: flex; gap: 10px; margin-bottom: 10px; }
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    margin: 10px 15px;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.tabs button {
+    border: none;
+    background: none;
+    padding: 10px;
+    flex: 1;
+    border-radius: 10px;
+}
+
+.tabs button.active {
+    background: var(--secondary);
+    font-weight: bold;
+}
+
+.chip {
+    display: inline-block;
+    padding: 5px 12px;
+    background: #eee;
+    border-radius: 15px;
+    margin: 3px;
+    font-size: 0.8rem;
+}
+
+.chip.selected {
+    background: var(--primary);
+    color: white;
+}
+
+.grand-total {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+td { padding: 8px 0; border-bottom: 1px dashed #eee; }
