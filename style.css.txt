@@ -1,0 +1,88 @@
+:root {
+    --primary: #ff85a2;
+    --secondary: #b2f7ef;
+    --bg: #fffcfd;
+    --text: #444;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    font-size: 16px; /* ズーム防止用 */
+}
+
+/* スマホでのズームを防ぐ重要設定 */
+input, select, textarea {
+    font-size: 16px !important;
+}
+
+header {
+    background: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--secondary);
+}
+
+.input-unit {
+    margin-bottom: 15px;
+}
+
+.input-unit label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.field-label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.card {
+    background: white;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.live-date {
+    font-size: 0.8rem;
+    background: var(--secondary);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.guest-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid var(--secondary);
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: #999;
+    width: 100%;
+    margin-top: 10px;
+    text-decoration: underline;
+}
+
+/* 以下、前回からの引き継ぎ＋微調整 */
+.btn-primary { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; }
+.tabs { display: flex; margin: 10px; background: #eee; border-radius: 10px; padding: 3px; }
+.tabs button { flex: 1; border: none; padding: 10px; border-radius: 8px; background: none; }
+.tabs button.active { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-weight: bold; }
+.chip-container { margin: 10px 0; }
+.chip { display: inline-block; padding: 6px 12px; background: #f0f0f0; border-radius: 20px; margin: 4px; font-size: 0.9rem; border: 1px solid #ddd; }
+.chip.selected { background: var(--primary); color: white; border-color: var(--primary); }
